@@ -26,7 +26,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> getAll() {
-        return Storage.products;
+        return productDao.getAll();
     }
 
     @Override
