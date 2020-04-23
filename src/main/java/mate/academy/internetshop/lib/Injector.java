@@ -1,8 +1,5 @@
 package mate.academy.internetshop.lib;
 
-import mate.academy.internetshop.lib.anno.Dao;
-import mate.academy.internetshop.lib.anno.Inject;
-import mate.academy.internetshop.lib.anno.Service;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
@@ -13,6 +10,9 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import mate.academy.internetshop.lib.anno.Dao;
+import mate.academy.internetshop.lib.anno.Inject;
+import mate.academy.internetshop.lib.anno.Service;
 
 public class Injector {
 
