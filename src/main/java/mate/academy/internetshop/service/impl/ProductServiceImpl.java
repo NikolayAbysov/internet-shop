@@ -2,6 +2,7 @@ package mate.academy.internetshop.service.impl;
 
 import java.util.List;
 import mate.academy.internetshop.dao.ProductDao;
+import mate.academy.internetshop.db.Storage;
 import mate.academy.internetshop.lib.anno.Inject;
 import mate.academy.internetshop.lib.anno.Service;
 import mate.academy.internetshop.model.Product;
@@ -25,7 +26,7 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<Product> getAll() {
-        return productDao.getAll();
+        return Storage.products;
     }
 
     @Override
