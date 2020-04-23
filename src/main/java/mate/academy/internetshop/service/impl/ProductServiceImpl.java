@@ -29,18 +29,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<Product> getAllAvailable() {
-        return null;
-    }
-
-    @Override
     public Product update(Product product) {
         return productDao.update(product);
     }
 
     @Override
     public boolean delete(Long id) {
-        productDao.delete(id);
-        return true;
+        return productDao.delete(id);
     }
 }

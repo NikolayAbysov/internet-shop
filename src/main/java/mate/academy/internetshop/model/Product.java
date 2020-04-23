@@ -4,18 +4,9 @@ public class Product {
     private Long id;
     private String name;
     private Double price;
-    private int count;
 
     public Product(String name) {
         this.name = name;
-    }
-
-    public int getCount() {
-        return count;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
     }
 
     public Long getId() {
@@ -48,7 +39,7 @@ public class Product {
                 + "id=" + id
                 + ", name='" + name + '\''
                 + ", price=" + price
-                + ", count=" + count
+                + ", count="
                 + '}';
     }
 }

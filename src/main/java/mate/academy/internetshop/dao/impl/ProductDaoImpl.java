@@ -1,9 +1,7 @@
 package mate.academy.internetshop.dao.impl;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
-import java.util.Random;
 import mate.academy.internetshop.dao.ProductDao;
 import mate.academy.internetshop.dao.Storage;
 import mate.academy.internetshop.lib.anno.Dao;
@@ -14,18 +12,16 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     public Product create(Product product) {
-        product.setId(Math.abs(new Random().nextLong()));
-        Storage.products.add(product);
+        Storage.addProduct(product);
         return product;
     }
 
     @Override
     public Optional<Product> get(Long id) {
-        return Optional.ofNullable(Storage.products
+        return Storage.products
                 .stream()
                 .filter(i -> i.getId().equals(id))
-                .findFirst()
-                .orElseThrow(() -> new NoSuchElementException("Can't find item with id: " + id)));
+                .findFirst();
     }
 
     @Override
@@ -40,7 +36,7 @@ public class ProductDaoImpl implements ProductDao {
     }
 
     @Override
-    public void delete(Long id) {
-        Storage.products.removeIf(i -> i.getId().equals(id));
+    public boolean delete(Long id) {
+        return Storage.products.removeIf(i -> i.getId().equals(id));
     }
 }
