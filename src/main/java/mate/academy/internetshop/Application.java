@@ -1,6 +1,6 @@
 package mate.academy.internetshop;
 
-import mate.academy.internetshop.dao.Storage;
+import mate.academy.internetshop.db.Storage;
 import mate.academy.internetshop.lib.Injector;
 import mate.academy.internetshop.model.Product;
 import mate.academy.internetshop.service.ProductService;
