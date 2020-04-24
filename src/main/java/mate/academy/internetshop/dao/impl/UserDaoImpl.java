@@ -24,8 +24,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User update(User user) {
-        Storage.users.set(Storage.users.indexOf(user), user);
-        return null;
+        return Storage.users.set(Storage.users.indexOf(user), user);
     }
 
     @Override

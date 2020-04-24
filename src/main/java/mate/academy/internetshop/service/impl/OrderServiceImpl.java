@@ -16,16 +16,21 @@ public class OrderServiceImpl implements OrderService {
     @Inject
     private OrderDao orderDao;
 
+    @Inject
+    private ShoppingCartServiceImpl shoppingCartService;
+
     @Override
     public Order completeOrder(List<Product> products, User user) {
-        return orderDao.create(new Order(products, user));
+        Order order = new Order(products, user);
+        shoppingCartService.clear(shoppingCartService.getByUserId(user.getId()));
+        return orderDao.create(order);
     }
 
     @Override
     public List<Order> getUserOrders(User user) {
         return orderDao.getAll()
                 .stream()
-                .filter(o -> o.getUser().equals(user))
+                .filter(o -> o.getUser().getId().equals(user.getId()))
                 .collect(Collectors.toList());
     }
 
