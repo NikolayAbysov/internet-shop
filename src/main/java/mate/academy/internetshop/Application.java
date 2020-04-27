@@ -43,6 +43,5 @@ public class Application {
         System.out.println(shoppingCartService.getByUserId(user.getId()));
         shoppingCartService.clear(shoppingCart);
         System.out.println(shoppingCart.getProducts());
-
     }
 }
