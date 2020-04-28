@@ -6,8 +6,13 @@ public class User {
     private String login;
     private String password;
 
-    public User(String name) {
-        this.name = name;
+    public User(String login) {
+        this.login = login;
+    }
+
+    public User(String login, String password) {
+        this.login = login;
+        this.password = password;
     }
 
     public Long getId() {
