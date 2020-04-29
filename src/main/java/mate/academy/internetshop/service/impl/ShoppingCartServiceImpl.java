@@ -40,11 +40,36 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         return shoppingCartDao.getAll()
                 .stream().filter(s -> s.getUser().getId().equals(userId))
                 .findFirst()
-                .orElse(new ShoppingCart(userService.get(userId)));
+                .get();
     }
 
     @Override
     public List<Product> getAllProducts(ShoppingCart shoppingCart) {
         return shoppingCart.getProducts();
+    }
+
+    @Override
+    public ShoppingCart create(ShoppingCart element) {
+        return shoppingCartDao.create(element);
+    }
+
+    @Override
+    public ShoppingCart get(Long id) {
+        return shoppingCartDao.get(id).get();
+    }
+
+    @Override
+    public List<ShoppingCart> getAll() {
+        return shoppingCartDao.getAll();
+    }
+
+    @Override
+    public ShoppingCart update(ShoppingCart element) {
+        return shoppingCartDao.update(element);
+    }
+
+    @Override
+    public boolean delete(Long id) {
+        return shoppingCartDao.delete(id);
     }
 }

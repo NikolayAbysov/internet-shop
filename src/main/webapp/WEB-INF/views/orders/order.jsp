@@ -2,33 +2,27 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>All users</title>
+    <title>Order</title>
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/static/header.jsp"/>
 <div class="container">
-    <h1>All users page</h1>
     <table border="1">
         <tr>
-            <th>ID</th>
-            <th>Login</th>
+            <th>Name</th>
+            <th>Price</th>
         </tr>
-        <c:forEach var="user" items="${users}">
+        <c:forEach var="product" items="${products}">
             <tr>
                 <td>
-                    <c:out value="${user.id}"/>
+                    <c:out value="${product.name}"/>
                 </td>
                 <td>
-                    <c:out value="${user.login}"/>
-                </td>
-                <td>
-                    <a href="${pageContext.request.contextPath}/users/delete?id=${user.id}">Delete</a>
+                    <c:out value="${product.price}"/>
                 </td>
             </tr>
         </c:forEach>
     </table>
-    <br>
-    <a href="${pageContext.request.contextPath}/">Go to the main page.</a>
 </div>
 <jsp:include page="/WEB-INF/views/static/footer.jsp"/>
 </body>

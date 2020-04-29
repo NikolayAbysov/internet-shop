@@ -51,11 +51,11 @@
 
     <servlet>
         <servlet-name>allProducts</servlet-name>
-        <servlet-class>mate.academy.internetshop.controllers.GetAllProductsController</servlet-class>
+        <servlet-class>mate.academy.internetshop.controllers.ProductsController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>allProducts</servlet-name>
-        <url-pattern>/products/all</url-pattern>
+        <url-pattern>/products</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -83,6 +83,24 @@
     <servlet-mapping>
         <servlet-name>shoppingCart</servlet-name>
         <url-pattern>/shop/cart</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>deleteFromShoppingCart</servlet-name>
+        <servlet-class>mate.academy.internetshop.controllers.DeleteProductFromShoppingCartController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>deleteFromShoppingCart</servlet-name>
+        <url-pattern>/shop/cart/delete</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>createOrder</servlet-name>
+        <servlet-class>mate.academy.internetshop.controllers.OrderController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>createOrder</servlet-name>
+        <url-pattern>/order</url-pattern>
     </servlet-mapping>
 
 </web-app>

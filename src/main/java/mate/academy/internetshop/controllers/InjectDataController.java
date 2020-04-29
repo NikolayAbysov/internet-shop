@@ -7,8 +7,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import mate.academy.internetshop.lib.Injector;
 import mate.academy.internetshop.model.Product;
+import mate.academy.internetshop.model.ShoppingCart;
 import mate.academy.internetshop.model.User;
 import mate.academy.internetshop.service.ProductService;
+import mate.academy.internetshop.service.ShoppingCartService;
 import mate.academy.internetshop.service.UserService;
 
 public class InjectDataController extends HttpServlet {
@@ -17,6 +19,8 @@ public class InjectDataController extends HttpServlet {
             = (UserService) INJECTOR.getInstance(UserService.class);
     private ProductService productService
             = (ProductService) INJECTOR.getInstance(ProductService.class);
+    private ShoppingCartService shoppingCartService
+            = (ShoppingCartService) INJECTOR.getInstance(ShoppingCartService.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -31,6 +35,10 @@ public class InjectDataController extends HttpServlet {
         productService.create(hack);
         productService.create(slash);
 
+        ShoppingCart shoppingCartShion = new ShoppingCart(shion);
+        ShoppingCart shoppingCartBenio = new ShoppingCart(benio);
+        shoppingCartService.create(shoppingCartShion);
+        shoppingCartService.create(shoppingCartBenio);
         req.getRequestDispatcher("/WEB-INF/views/injectData.jsp").forward(req, resp);
     }
 }
