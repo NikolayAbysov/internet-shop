@@ -12,7 +12,6 @@ import mate.academy.internetshop.service.OrderService;
 
 @Service
 public class OrderServiceImpl implements OrderService {
-
     @Inject
     private OrderDao orderDao;
 

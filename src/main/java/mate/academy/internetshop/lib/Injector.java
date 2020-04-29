@@ -15,9 +15,7 @@ import mate.academy.internetshop.lib.anno.Inject;
 import mate.academy.internetshop.lib.anno.Service;
 
 public class Injector {
-
     private static final Map<String, Injector> injectors = new HashMap<>();
-
     private final Map<Class<?>, Object> instanceOfClasses = new HashMap<>();
     private final List<Class<?>> classes = new ArrayList<>();
 
