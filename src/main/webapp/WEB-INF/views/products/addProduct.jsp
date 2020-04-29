@@ -8,9 +8,9 @@
 <h1 style="color: red">${message}</h1>
 <br>
 <form method="post" action="${pageContext.request.contextPath}/products/add">
-    Product name <input type="text" name="productName">
+    Product name <input type="text" name="productName" placeholder="Enter product name" required>
     <br>
-    Product price <input type="text" name="productPrice">
+    Product price <input type="text" name="productPrice" placeholder="Enter product price" required>
     <br>
     <button type="submit">Add</button>
 </form>

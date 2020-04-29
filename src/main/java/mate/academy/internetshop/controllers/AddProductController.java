@@ -26,12 +26,7 @@ public class AddProductController extends HttpServlet {
         String productName = req.getParameter("productName");
         String productPrice = req.getParameter("productPrice");
 
-        if (productName.length() > 0 && productPrice.length() > 0) {
-            productService.create(new Product(productName, Double.valueOf(productPrice)));
-            resp.sendRedirect(req.getContextPath() + "/");
-        } else {
-            req.setAttribute("message", "Please, fill all fields!");
-            req.getRequestDispatcher("/WEB-INF/views/products/addProduct.jsp").forward(req, resp);
-        }
+        productService.create(new Product(productName, Double.valueOf(productPrice)));
+        resp.sendRedirect(req.getContextPath() + "/");
     }
 }
