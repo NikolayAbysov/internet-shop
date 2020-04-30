@@ -1,4 +1,4 @@
-package mate.academy.internetshop.controllers;
+package mate.academy.internetshop.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -22,6 +22,6 @@ public class AddProductToShoppingCartController extends HttpServlet {
             throws ServletException, IOException {
         shoppingCartService.addProduct(shoppingCartService.getByUserId(USER_ID),
                 productService.get(Long.valueOf(req.getParameter("id"))));
-        resp.sendRedirect(req.getContextPath() + "/products/all");
+        resp.sendRedirect(req.getContextPath() + "products?get=all");
     }
 }

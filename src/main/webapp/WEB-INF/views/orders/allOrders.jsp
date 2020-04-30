@@ -24,7 +24,7 @@
                     <a href="${pageContext.request.contextPath}/order?orderId=${order.id}">Details</a>
                 </td>
                 <td>
-                    <a href="${pageContext.request.contextPath}/order?remove=${order.id}">Remove</a>
+                    <a href="${pageContext.request.contextPath}/order/delete?orderId=${order.id}">Remove</a>
                 </td>
             </tr>
         </c:forEach>

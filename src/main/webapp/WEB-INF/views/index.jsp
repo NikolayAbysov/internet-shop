@@ -22,7 +22,7 @@
     <br>
     <a href="${pageContext.request.contextPath}/shop/cart">View shopping cart</a>
     <br>
-    <a href="${pageContext.request.contextPath}/order?get=all">View orders</a>
+    <a href="${pageContext.request.contextPath}/order/all">View orders</a>
 </div>
 <jsp:include page="/WEB-INF/views/static/footer.jsp"/>
 </body>

@@ -28,7 +28,7 @@
         </c:forEach>
     </table>
     <br>
-    <a class="button" href="${pageContext.request.contextPath}/order?userId=${user.id}"><button>Order</button></a>
+    <a class="button" href="${pageContext.request.contextPath}/order/new?userId=${user.id}"><button>Order</button></a>
     <br>
     <a href="${pageContext.request.contextPath}/">Go to the main page.</a>
 </div>
