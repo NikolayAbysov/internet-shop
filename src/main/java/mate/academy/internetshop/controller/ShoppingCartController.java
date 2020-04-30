@@ -1,4 +1,4 @@
-package mate.academy.internetshop.controllers;
+package mate.academy.internetshop.controller;
 
 import java.io.IOException;
 import java.util.List;
@@ -13,7 +13,7 @@ import mate.academy.internetshop.service.ShoppingCartService;
 
 public class ShoppingCartController extends HttpServlet {
     private static Long USER_ID = 1L;
-    private static final Injector INJECTOR = Injector.getInstance("mate.academy");
+    private static final Injector INJECTOR = Injector.getInstance("mate.academy.internetshop");
     private final ShoppingCartService shoppingCartService =
             (ShoppingCartService) INJECTOR.getInstance(ShoppingCartService.class);
 
@@ -23,7 +23,7 @@ public class ShoppingCartController extends HttpServlet {
         ShoppingCart shoppingCart = shoppingCartService.getByUserId(USER_ID);
         List<Product> products = shoppingCartService.getAllProducts(shoppingCart);
         req.setAttribute("products", products);
-        req.setAttribute("userName", shoppingCartService.getByUserId(USER_ID).getUser().getLogin());
+        req.setAttribute("user", shoppingCartService.getByUserId(USER_ID).getUser());
         req.getRequestDispatcher("/WEB-INF/views/shoppingCart/shoppingCart.jsp").forward(req, resp);
     }
 }

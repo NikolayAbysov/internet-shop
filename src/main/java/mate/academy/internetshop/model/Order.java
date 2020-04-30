@@ -6,6 +6,7 @@ public class Order {
     private Long id;
     private List<Product> products;
     private User user;
+    private Double totalPrice;
 
     public Order(List<Product> products, User user) {
         this.products = products;
@@ -34,5 +35,13 @@ public class Order {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public Double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(Double totalPrice) {
+        this.totalPrice = totalPrice;
     }
 }

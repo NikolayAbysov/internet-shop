@@ -2,33 +2,33 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>All users</title>
+    <title>All orders</title>
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/static/header.jsp"/>
 <div class="container">
-    <h1>All users page</h1>
-    <table border="1">
+    <table class="table table-striped">
         <tr>
-            <th>ID</th>
-            <th>Login</th>
+            <th>Id</th>
+            <th>Price</th>
         </tr>
-        <c:forEach var="user" items="${users}">
+        <c:forEach var="order" items="${userOrders}">
             <tr>
                 <td>
-                    <c:out value="${user.id}"/>
+                    <c:out value="${order.id}"/>
                 </td>
                 <td>
-                    <c:out value="${user.login}"/>
+                    <c:out value="${order.totalPrice}"/>
                 </td>
                 <td>
-                    <a href="${pageContext.request.contextPath}/users/delete?id=${user.id}">Delete</a>
+                    <a href="${pageContext.request.contextPath}/order?orderId=${order.id}">Details</a>
+                </td>
+                <td>
+                    <a href="${pageContext.request.contextPath}/order/delete?orderId=${order.id}">Remove</a>
                 </td>
             </tr>
         </c:forEach>
     </table>
-    <br>
-    <a href="${pageContext.request.contextPath}/">Go to the main page.</a>
 </div>
 <jsp:include page="/WEB-INF/views/static/footer.jsp"/>
 </body>
