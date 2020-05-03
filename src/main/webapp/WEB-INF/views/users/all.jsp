@@ -6,30 +6,30 @@
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/static/header.jsp"/>
-<div class="container">
-    <h1>All users page</h1>
-    <table border="1">
+<table class="table table-borderless">
+    <h1>All users</h1>
+    <thead>
+    <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Login</th>
+    </tr>
+    </thead>
+    <tbody>
+    <c:forEach var="user" items="${users}">
         <tr>
-            <th>ID</th>
-            <th>Login</th>
+            <td>
+                <c:out value="${user.id}"/>
+            </td>
+            <td>
+                <c:out value="${user.login}"/>
+            </td>
+            <td>
+                <a href="${pageContext.request.contextPath}/users/delete?id=${user.id}">Delete</a>
+            </td>
         </tr>
-        <c:forEach var="user" items="${users}">
-            <tr>
-                <td>
-                    <c:out value="${user.id}"/>
-                </td>
-                <td>
-                    <c:out value="${user.login}"/>
-                </td>
-                <td>
-                    <a href="${pageContext.request.contextPath}/users/delete?id=${user.id}">Delete</a>
-                </td>
-            </tr>
-        </c:forEach>
-    </table>
-    <br>
-    <a href="${pageContext.request.contextPath}/">Go to the main page.</a>
-</div>
+    </c:forEach>
+    </tbody>
+</table>
 <jsp:include page="/WEB-INF/views/static/footer.jsp"/>
 </body>
 </html>

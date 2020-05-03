@@ -6,32 +6,31 @@
 </head>
 <body>
 <jsp:include page="/WEB-INF/views/static/header.jsp"/>
-<div class="container">
+<table class="table table-borderless">
     <h1>${user.login} shopping cart:</h1>
-    <table border="1">
+    <thead>
+    <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Price</th>
+    </tr>
+    </thead>
+    <tbody>
+    <c:forEach var="product" items="${products}">
         <tr>
-            <th>Name</th>
-            <th>Price</th>
+            <td>
+                <c:out value="${product.name}"/>
+            </td>
+            <td>
+                <c:out value="${product.price}"/>
+            </td>
+            <td>
+                <a href="${pageContext.request.contextPath}/shop/cart/delete?id=${product.id}&userId=${user.id}">Remove</a>
+            </td>
         </tr>
-        <c:forEach var="product" items="${products}">
-            <tr>
-                <td>
-                    <c:out value="${product.name}"/>
-                </td>
-                <td>
-                    <c:out value="${product.price}"/>
-                </td>
-                <td>
-                    <a href="${pageContext.request.contextPath}/shop/cart/delete?id=${product.id}&userId=${user.id}">Remove</a>
-                </td>
-            </tr>
-        </c:forEach>
-    </table>
-    <br>
-    <a class="button" href="${pageContext.request.contextPath}/order/new?userId=${user.id}"><button>Order</button></a>
-    <br>
-    <a href="${pageContext.request.contextPath}/">Go to the main page.</a>
-</div>
+    </c:forEach>
+    </tbody>
+</table>
+<a class="button" href="${pageContext.request.contextPath}/order/new?userId=${user.id}"><button class="btn btn-info btn-md">Order</button></a>
 <jsp:include page="/WEB-INF/views/static/footer.jsp"/>
 </body>
 </html>

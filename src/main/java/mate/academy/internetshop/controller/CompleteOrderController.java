@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletResponse;
 import mate.academy.internetshop.lib.Injector;
 import mate.academy.internetshop.model.Order;
 import mate.academy.internetshop.model.ShoppingCart;
-import mate.academy.internetshop.model.User;
 import mate.academy.internetshop.service.OrderService;
 import mate.academy.internetshop.service.ShoppingCartService;
 import mate.academy.internetshop.service.UserService;
@@ -28,7 +27,8 @@ public class CompleteOrderController extends HttpServlet {
             throws ServletException, IOException {
         ShoppingCart shoppingCart
                 = shoppingCartService.getByUserId(USER_ID);
-        Order order = orderService.completeOrder(shoppingCart.getProducts(), shoppingCart.getUser());
+        Order order = orderService.completeOrder(shoppingCart.getProducts(),
+                shoppingCart.getUser());
         req.setAttribute("products", order.getProducts());
         req.getRequestDispatcher("/WEB-INF/views/orders/order.jsp").forward(req, resp);
     }
