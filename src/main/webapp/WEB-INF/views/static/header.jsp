@@ -31,6 +31,9 @@
             </li>
         </ul>
     </div>
+    <div class="nav navbar-nav navbar-right">
+        <a href="${pageContext.request.contextPath}/logout" class="navbar-brand"><strong>Logout</strong></a>
+    </div>
 </nav>
 
 </body>
