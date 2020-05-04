@@ -114,7 +114,7 @@
 
     <servlet>
         <servlet-name>viewAllOrders</servlet-name>
-        <servlet-class>mate.academy.internetshop.controller.GetAllOrdersController</servlet-class>
+        <servlet-class>mate.academy.internetshop.controller.GetUserOrdersController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>viewAllOrders</servlet-name>
