@@ -26,9 +26,17 @@ public class AuthorizationFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
         protectedUrls.put("/users/all", List.of(Role.RoleName.ADMIN));
+        protectedUrls.put("/users/delete", List.of(Role.RoleName.ADMIN));
         protectedUrls.put("/products/allAdmin", List.of(Role.RoleName.ADMIN));
+        protectedUrls.put("/products/allAdmin/delete", List.of(Role.RoleName.ADMIN));
+        protectedUrls.put("/products/add", List.of(Role.RoleName.ADMIN));
         protectedUrls.put("/order", List.of(Role.RoleName.USER));
+        protectedUrls.put("/order/new", List.of(Role.RoleName.USER));
+        protectedUrls.put("/order/delete", List.of(Role.RoleName.USER));
+        protectedUrls.put("/orders/all", List.of(Role.RoleName.USER));
         protectedUrls.put("/shop", List.of(Role.RoleName.USER));
+        protectedUrls.put("/shop/cart", List.of(Role.RoleName.USER));
+        protectedUrls.put("/shop/cart/delete", List.of(Role.RoleName.USER));
     }
 
     @Override
@@ -53,10 +61,8 @@ public class AuthorizationFilter implements Filter {
         User user = userService.get(userId);
         if (isAuthorized(user, protectedUrls.get(reqUrl))) {
             filterChain.doFilter(req, resp);
-            return;
         } else {
             req.getRequestDispatcher("/WEB-INF/views/service/accessDenied.jsp").forward(req, resp);
-            return;
         }
     }
 
