@@ -15,6 +15,8 @@ import mate.academy.internetshop.lib.anno.Inject;
 import mate.academy.internetshop.lib.anno.Service;
 
 public class Injector {
+    private static final Class DAO_CLASS = Dao.class;
+    private static final Class SERVICE_CLASS = Service.class;
     private static final Map<String, Injector> injectors = new HashMap<>();
     private final Map<Class<?>, Object> instanceOfClasses = new HashMap<>();
     private final List<Class<?>> classes = new ArrayList<>();
@@ -65,7 +67,9 @@ public class Injector {
         for (Class<?> clazz : classes) {
             Class<?>[] interfaces = clazz.getInterfaces();
             for (Class<?> singleInterface : interfaces) {
-                if (singleInterface.equals(certainInterface)) {
+                if (singleInterface.equals(certainInterface)
+                        && (clazz.isAnnotationPresent(DAO_CLASS)
+                        || clazz.isAnnotationPresent(SERVICE_CLASS))) {
                     return clazz;
                 }
             }
