@@ -28,20 +28,24 @@ public class ProductDaoImpl implements ProductDao {
             preparedStatement.execute();
         } catch (SQLException e) {
             LOGGER.warn("Unable to execute create product query. Stack trace: " + e.getMessage());
+            throw new RuntimeException("Unable to execute create product query. Stack trace: " + e.getMessage());
         }
         return element;
     }
 
     @Override
     public Optional<Product> get(Long id) {
-        Product product = new Product();
         String query = "select * from internetshop.products where product_id = ?";
+        Product product = new Product();
 
         try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setLong(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
-            product = getProduct(resultSet, product);
+
+            while (resultSet.next()) {
+                product = getProduct(resultSet);
+            }
         } catch (SQLException e) {
             LOGGER.warn("Unable to execute get product by Id query. Stack trace: "
                     + e.getMessage());
@@ -57,7 +61,11 @@ public class ProductDaoImpl implements ProductDao {
         try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             ResultSet resultSet = preparedStatement.executeQuery();
-            getAllProducts(resultSet, productList);
+
+            while (resultSet.next()) {
+                productList.add(getProduct(resultSet));
+            }
+
         } catch (SQLException e) {
             LOGGER.warn("Unable to execute get all products query. Stack trace: " + e.getMessage());
         }
@@ -96,23 +104,12 @@ public class ProductDaoImpl implements ProductDao {
         return result;
     }
 
-    private Product getProduct(ResultSet rs, Product product) throws SQLException {
-        while (rs.next()) {
-            product.setId(rs.getLong("product_id"));
-            product.setName(rs.getString("name"));
-            product.setPrice(rs.getDouble("price"));
-        }
+    private Product getProduct(ResultSet rs) throws SQLException {
+        var productId = rs.getLong("product_id");
+        var productName = rs.getString("name");
+        var productPrice = rs.getDouble("price");
+        var product = new Product(productName, productPrice);
+        product.setId(productId);
         return product;
-    }
-
-    private List<Product> getAllProducts(ResultSet rs, List<Product> productList)
-            throws SQLException {
-        while (rs.next()) {
-            Product product = new Product((rs.getString("name")));
-            product.setId(rs.getLong("product_id"));
-            product.setPrice(rs.getDouble("price"));
-            productList.add(product);
-        }
-        return productList;
     }
 }

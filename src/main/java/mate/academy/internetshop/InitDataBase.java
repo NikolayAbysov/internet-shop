@@ -23,7 +23,7 @@ public class InitDataBase {
                     new BufferedReader(
                             new InputStreamReader(
                                     Objects.requireNonNull(Level.class.getClassLoader()
-                                            .getResourceAsStream("init_db.sql"))
+                                            .getResourceAsStream(filePath))
                             )
                     );
             sr.runScript(reader);
