@@ -8,14 +8,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import mate.academy.internetshop.dao.ProductDao;
+import mate.academy.internetshop.exception.DataProcessingException;
 import mate.academy.internetshop.lib.anno.Dao;
 import mate.academy.internetshop.model.Product;
 import mate.academy.internetshop.util.ConnectionUtil;
-import org.apache.log4j.Logger;
 
 @Dao
 public class ProductDaoImpl implements ProductDao {
-    private static final Logger LOGGER = Logger.getLogger(ConnectionUtil.class);
 
     @Override
     public Product create(Product element) {
@@ -26,11 +25,10 @@ public class ProductDaoImpl implements ProductDao {
             preparedStatement.setString(1, element.getName());
             preparedStatement.setDouble(2, element.getPrice());
             preparedStatement.execute();
+            return element;
         } catch (SQLException e) {
-            LOGGER.warn("Unable to execute create product query. Stack trace: " + e.getMessage());
-            throw new RuntimeException("Unable to execute create product query. Stack trace: " + e.getMessage());
+            throw new DataProcessingException("Unable to execute create product query. Stack trace: " + e.getMessage());
         }
-        return element;
     }
 
     @Override
@@ -47,8 +45,7 @@ public class ProductDaoImpl implements ProductDao {
                 product = getProduct(resultSet);
             }
         } catch (SQLException e) {
-            LOGGER.warn("Unable to execute get product by Id query. Stack trace: "
-                    + e.getMessage());
+            throw new DataProcessingException("Unable to execute get product by Id query. Stack trace: " + e.getMessage());
         }
         return Optional.of(product);
     }
@@ -67,7 +64,7 @@ public class ProductDaoImpl implements ProductDao {
             }
 
         } catch (SQLException e) {
-            LOGGER.warn("Unable to execute get all products query. Stack trace: " + e.getMessage());
+            throw new DataProcessingException("Unable to execute get all products query. Stack trace: " + e.getMessage());
         }
         return productList;
     }
@@ -83,7 +80,7 @@ public class ProductDaoImpl implements ProductDao {
             preparedStatement.setLong(3, element.getId());
             preparedStatement.execute();
         } catch (SQLException e) {
-            LOGGER.warn("Unable to execute update product query. Stack trace: " + e.getMessage());
+            throw new DataProcessingException("Unable to execute update product query. Stack trace: " + e.getMessage());
         }
         return element;
     }
@@ -99,7 +96,7 @@ public class ProductDaoImpl implements ProductDao {
             result = preparedStatement.execute();
 
         } catch (SQLException e) {
-            LOGGER.warn("Unable to execute deletion product query. Stack trace: " + e.getMessage());
+            throw new DataProcessingException("Unable to execute deletion product query. Stack trace: " + e.getMessage());
         }
         return result;
     }
