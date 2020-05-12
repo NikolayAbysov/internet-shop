@@ -27,7 +27,9 @@ public class ProductDaoImpl implements ProductDao {
             preparedStatement.execute();
             return element;
         } catch (SQLException e) {
-            throw new DataProcessingException("Unable to execute create product query. Stack trace: " + e.getMessage());
+            throw new DataProcessingException("Unable to execute "
+                    + "create product query. Stack trace: "
+                    + e.getMessage());
         }
     }
 
@@ -45,7 +47,9 @@ public class ProductDaoImpl implements ProductDao {
                 product = getProduct(resultSet);
             }
         } catch (SQLException e) {
-            throw new DataProcessingException("Unable to execute get product by Id query. Stack trace: " + e.getMessage());
+            throw new DataProcessingException("Unable to execute "
+                    + "get product by Id query. Stack trace: "
+                    + e.getMessage());
         }
         return Optional.of(product);
     }
@@ -64,7 +68,9 @@ public class ProductDaoImpl implements ProductDao {
             }
 
         } catch (SQLException e) {
-            throw new DataProcessingException("Unable to execute get all products query. Stack trace: " + e.getMessage());
+            throw new DataProcessingException("Unable to execute "
+                    + "get all products query. Stack trace: "
+                    + e.getMessage());
         }
         return productList;
     }
@@ -80,7 +86,9 @@ public class ProductDaoImpl implements ProductDao {
             preparedStatement.setLong(3, element.getId());
             preparedStatement.execute();
         } catch (SQLException e) {
-            throw new DataProcessingException("Unable to execute update product query. Stack trace: " + e.getMessage());
+            throw new DataProcessingException("Unable to execute "
+                    + "update product query. Stack trace: "
+                    + e.getMessage());
         }
         return element;
     }
@@ -96,7 +104,9 @@ public class ProductDaoImpl implements ProductDao {
             result = preparedStatement.execute();
 
         } catch (SQLException e) {
-            throw new DataProcessingException("Unable to execute deletion product query. Stack trace: " + e.getMessage());
+            throw new DataProcessingException("Unable to execute "
+                    + "deletion product query. Stack trace: "
+                    + e.getMessage());
         }
         return result;
     }
