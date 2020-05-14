@@ -8,6 +8,12 @@ public class Order {
     private Long userId;
     private Double totalPrice;
 
+    public Order(Long id, List<Product> products, Long userId) {
+        this.id = id;
+        this.products = products;
+        this.userId = userId;
+    }
+
     public Order(List<Product> products, Long userId) {
         this.products = products;
         this.userId = userId;
