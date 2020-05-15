@@ -167,7 +167,7 @@ public class UserDaoImpl implements UserDao {
         return roles;
     }
 
-    private Set<Role> setRolesId(Set<Role> roles) {
+    private void setRolesId(Set<Role> roles) {
         try (Connection connection = ConnectionUtil.getConnection()) {
             for (Role role : roles) {
                 String query = "SELECT role_id FROM roles WHERE role_name = ?";
@@ -184,7 +184,6 @@ public class UserDaoImpl implements UserDao {
                     + "setRolesId query. Stack trace: "
                     + e.getMessage());
         }
-        return roles;
     }
 
     private void addRoles(User user) {
