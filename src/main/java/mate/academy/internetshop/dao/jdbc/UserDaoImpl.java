@@ -43,16 +43,17 @@ public class UserDaoImpl implements UserDao {
         String query = "INSERT INTO users (name, login, password) "
                 + "VALUES(?,?,?)";
         try (Connection connection = ConnectionUtil.getConnection()) {
-            PreparedStatement statement = connection
+            PreparedStatement preparedStatement = connection
                     .prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
-            statement.setString(1, user.getName());
-            statement.setString(2, user.getLogin());
-            statement.setString(3, user.getPassword());
-            statement.executeUpdate();
-            ResultSet resultSet = statement.getGeneratedKeys();
+            preparedStatement.setString(1, user.getName());
+            preparedStatement.setString(2, user.getLogin());
+            preparedStatement.setString(3, user.getPassword());
+            preparedStatement.executeUpdate();
+            ResultSet resultSet = preparedStatement.getGeneratedKeys();
             if (resultSet.next()) {
                 user.setId(resultSet.getLong(1));
             }
+            setRolesId(user.getRoles());
             addRoles(user);
             return user;
         } catch (SQLException e) {
@@ -68,9 +69,9 @@ public class UserDaoImpl implements UserDao {
                 + "FROM users "
                 + "WHERE user_id=?";
         try (Connection connection = ConnectionUtil.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setLong(1, id);
-            ResultSet resultSet = statement.executeQuery();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setLong(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 return Optional.of(getUser(resultSet));
             }
@@ -88,8 +89,8 @@ public class UserDaoImpl implements UserDao {
         String query = "SELECT * "
                 + "FROM users;";
         try (Connection connection = ConnectionUtil.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement(query);
-            ResultSet resultSet = statement.executeQuery();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 users.add(getUser(resultSet));
             }
@@ -106,12 +107,12 @@ public class UserDaoImpl implements UserDao {
         String query = "UPDATE users "
                 + "SET name=?, login=?, password=? WHERE user_id=?;";
         try (Connection connection = ConnectionUtil.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, user.getName());
-            statement.setString(2, user.getLogin());
-            statement.setString(3, user.getPassword());
-            statement.setLong(4, user.getId());
-            statement.executeUpdate();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, user.getName());
+            preparedStatement.setString(2, user.getLogin());
+            preparedStatement.setString(3, user.getPassword());
+            preparedStatement.setLong(4, user.getId());
+            preparedStatement.executeUpdate();
             deleteRoles(user);
             addRoles(user);
             return user;
@@ -127,9 +128,9 @@ public class UserDaoImpl implements UserDao {
         String query = "DELETE FROM users "
                 + "WHERE user_id=?";
         try (Connection connection = ConnectionUtil.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setLong(1, id);
-            statement.executeUpdate();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setLong(1, id);
+            preparedStatement.executeUpdate();
             return true;
         } catch (SQLException e) {
             throw new DataProcessingException("Unable to execute "
@@ -152,9 +153,9 @@ public class UserDaoImpl implements UserDao {
                 + "USING (role_id) "
                 + "WHERE users_roles.user_id = ?";
         try (Connection connection = ConnectionUtil.getConnection()) {
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setLong(1, userId);
-            ResultSet resultSet = statement.executeQuery();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setLong(1, userId);
+            ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 roles.add(Role.of(resultSet.getString("role_name")));
             }
@@ -166,15 +167,35 @@ public class UserDaoImpl implements UserDao {
         return roles;
     }
 
+    private Set<Role> setRolesId(Set<Role> roles) {
+        try (Connection connection = ConnectionUtil.getConnection()) {
+            for (Role role : roles) {
+                String query = "SELECT role_id FROM roles WHERE role_name = ?";
+                PreparedStatement preparedStatement = connection.prepareStatement(query);
+                preparedStatement.setString(1, role.getRoleName().toString());//check!
+                ResultSet resultSet = preparedStatement.executeQuery();
+
+                while (resultSet.next()) {
+                    role.setId(resultSet.getLong("role_id"));
+                }
+            }
+        } catch (SQLException e) {
+            throw new DataProcessingException("Unable to execute "
+                    + "setRolesId query. Stack trace: "
+                    + e.getMessage());
+        }
+        return roles;
+    }
+
     private void addRoles(User user) {
         try (Connection connection = ConnectionUtil.getConnection()) {
             for (Role role: user.getRoles()) {
                 String query = "INSERT INTO users_roles (user_id, role_id) "
                         + "VALUES (?,?)";
-                PreparedStatement statement = connection.prepareStatement(query);
-                statement.setLong(1, user.getId());
-                statement.setLong(2, role.getId());
-                statement.executeUpdate();
+                PreparedStatement preparedStatement = connection.prepareStatement(query);
+                preparedStatement.setLong(1, user.getId());
+                preparedStatement.setLong(2, role.getId());
+                preparedStatement.executeUpdate();
             }
         } catch (SQLException e) {
             throw new DataProcessingException("Unable to execute "
@@ -187,9 +208,9 @@ public class UserDaoImpl implements UserDao {
         try (Connection connection = ConnectionUtil.getConnection()) {
             String query = "DELETE FROM users_roles "
                     + "WHERE user_id=?";
-            PreparedStatement statement = connection.prepareStatement(query);
-            statement.setLong(1, user.getId());
-            statement.executeUpdate();
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setLong(1, user.getId());
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new DataProcessingException("Unable to execute "
                     + "deleteRoles query. Stack trace: "
