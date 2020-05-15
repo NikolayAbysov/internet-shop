@@ -18,7 +18,7 @@ import mate.academy.internetshop.util.ConnectionUtil;
 public class OrderDaoImpl implements OrderDao {
     @Override
     public Order create(Order order) {
-        String query = "INSERT INTO internetshop.orders (user_id) "
+        String query = "INSERT INTO orders (user_id) "
                 + "VALUES(?)";
         try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement statement = connection
@@ -41,7 +41,7 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public Optional<Order> get(Long id) {
         String query = "SELECT * "
-                + "FROM internetshop.orders "
+                + "FROM orders "
                 + "WHERE order_id=?";
         try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
@@ -62,7 +62,7 @@ public class OrderDaoImpl implements OrderDao {
     public List<Order> getAll() {
         List<Order> orders = new ArrayList<>();
         String query = "SELECT * "
-                + "FROM internetshop.orders;";
+                + "FROM orders;";
         try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
@@ -86,7 +86,7 @@ public class OrderDaoImpl implements OrderDao {
 
     @Override
     public boolean delete(Long id) {
-        String query = "DELETE FROM internetshop.orders "
+        String query = "DELETE FROM orders "
                 + "WHERE order_id=?";
         try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
@@ -103,7 +103,7 @@ public class OrderDaoImpl implements OrderDao {
     private void addProducts(Order order) {
         try (Connection connection = ConnectionUtil.getConnection()) {
             for (Product product : order.getProducts()) {
-                String query = "INSERT INTO internetshop.orders_products(order_id, product_id) "
+                String query = "INSERT INTO orders_products(order_id, product_id) "
                         + "values(?,?)";
                 PreparedStatement statement = connection.prepareStatement(query);
                 statement.setLong(1, order.getId());
@@ -127,7 +127,7 @@ public class OrderDaoImpl implements OrderDao {
         String query = "SELECT products.product_id, products.name, products.price "
                 + "FROM orders_products "
                 + "INNER JOIN products "
-                + "ON  orders_products.product_id=products.product_id "
+                + "USING(product_id) "
                 + "WHERE orders_products.order_id = ?";
         List<Product> products = new ArrayList<>();
         try (Connection connection = ConnectionUtil.getConnection()) {
@@ -150,7 +150,7 @@ public class OrderDaoImpl implements OrderDao {
 
     private void deleteProducts(Order order) {
         try (Connection connection = ConnectionUtil.getConnection()) {
-            String query = "DELETE FROM internetshop.orders_products "
+            String query = "DELETE FROM orders_products "
                     + "WHERE order_id=?";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setLong(1, order.getId());

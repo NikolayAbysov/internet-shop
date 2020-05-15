@@ -21,7 +21,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public Optional<User> getByLogin(String login) {
         String query = "SELECT * "
-                + "FROM internetshop.users "
+                + "FROM users "
                 + "WHERE login=?";
         try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -40,7 +40,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User create(User user) {
-        String query = "INSERT INTO internetshop.users (name, login, password) "
+        String query = "INSERT INTO users (name, login, password) "
                 + "VALUES(?,?,?)";
         try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement statement = connection
@@ -65,7 +65,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     public Optional<User> get(Long id) {
         String query = "SELECT * "
-                + "FROM internetshop.users "
+                + "FROM users "
                 + "WHERE user_id=?";
         try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
@@ -86,7 +86,7 @@ public class UserDaoImpl implements UserDao {
     public List<User> getAll() {
         List<User> users = new ArrayList<>();
         String query = "SELECT * "
-                + "FROM internetshop.users;";
+                + "FROM users;";
         try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
@@ -103,7 +103,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User update(User user) {
-        String query = "UPDATE internetshop.users "
+        String query = "UPDATE users "
                 + "SET name=?, login=?, password=? WHERE user_id=?;";
         try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
@@ -124,7 +124,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public boolean delete(Long id) {
-        String query = "DELETE FROM internetshop.users "
+        String query = "DELETE FROM users "
                 + "WHERE user_id=?";
         try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
@@ -149,8 +149,8 @@ public class UserDaoImpl implements UserDao {
     private Set<Role> getRoles(Long userId) {
         Set<Role> roles = new HashSet<>();
         String query = "SELECT roles.role_name FROM users_roles INNER JOIN roles "
-                + "ON  users_roles.role_id=roles.role_id \n"
-                + "WHERE users_roles.user_id = ?;";
+                + "USING (role_id) "
+                + "WHERE users_roles.user_id = ?";
         try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setLong(1, userId);
@@ -169,7 +169,7 @@ public class UserDaoImpl implements UserDao {
     private void addRoles(User user) {
         try (Connection connection = ConnectionUtil.getConnection()) {
             for (Role role: user.getRoles()) {
-                String query = "INSERT INTO internetshop.users_roles (user_id, role_id) "
+                String query = "INSERT INTO users_roles (user_id, role_id) "
                         + "VALUES (?,?)";
                 PreparedStatement statement = connection.prepareStatement(query);
                 statement.setLong(1, user.getId());
@@ -185,7 +185,7 @@ public class UserDaoImpl implements UserDao {
 
     private void deleteRoles(User user) {
         try (Connection connection = ConnectionUtil.getConnection()) {
-            String query = "DELETE FROM internetshop.users_roles "
+            String query = "DELETE FROM users_roles "
                     + "WHERE user_id=?";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setLong(1, user.getId());

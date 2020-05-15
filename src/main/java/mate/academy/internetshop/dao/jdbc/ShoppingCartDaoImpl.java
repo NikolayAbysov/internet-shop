@@ -18,7 +18,7 @@ import mate.academy.internetshop.util.ConnectionUtil;
 public class ShoppingCartDaoImpl implements ShoppingCartDao {
     @Override
     public ShoppingCart create(ShoppingCart shoppingCart) {
-        String query = "INSERT INTO internetshop.shopping_carts(user_id) "
+        String query = "INSERT INTO shopping_carts(user_id) "
                 + "VALUES (?)";
 
         try (Connection connection = ConnectionUtil.getConnection()) {
@@ -42,7 +42,7 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
     public Optional<ShoppingCart> get(Long id) {
         try (Connection connection = ConnectionUtil.getConnection()) {
             String query = "SELECT * "
-                    + "FROM internetshop.shopping_carts "
+                    + "FROM shopping_carts "
                     + "WHERE shopping_cart_id = ?";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setLong(1, id);
@@ -62,7 +62,7 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
     public List<ShoppingCart> getAll() {
         try (Connection connection = ConnectionUtil.getConnection()) {
             String query = "SELECT * "
-                    + "FROM internetshop.shopping_carts";
+                    + "FROM shopping_carts";
             PreparedStatement statement = connection.prepareStatement(query);
             ResultSet resultSet = statement.executeQuery();
 
@@ -80,12 +80,7 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
 
     @Override
     public ShoppingCart update(ShoppingCart shoppingCart) {
-        try {
-            deleteProducts(shoppingCart);
-        } catch (DataProcessingException e) {
-            addProducts(shoppingCart);
-            return shoppingCart;
-        }
+        deleteProducts(shoppingCart);
         addProducts(shoppingCart);
         return shoppingCart;
     }
@@ -93,7 +88,7 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
     @Override
     public boolean delete(Long id) {
         String query = "DELETE "
-                + "FROM internetshop.shopping_carts "
+                + "FROM shopping_carts "
                 + "WHERE cart_id=?;";
         try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement statement = connection.prepareStatement(query);
@@ -144,7 +139,7 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
         try (Connection connection = ConnectionUtil.getConnection()) {
             for (Product product : shoppingCart.getProducts()) {
                 String query = "INSERT INTO "
-                        + "internetshop.shopping_cart_products(cart_id, product_id) "
+                        + "shopping_cart_products(cart_id, product_id) "
                         + "values(?,?);";
                 PreparedStatement statement = connection.prepareStatement(query);
                 statement.setLong(1, shoppingCart.getId());
@@ -161,7 +156,7 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
     private void deleteProducts(ShoppingCart shoppingCart) {
         try (Connection connection = ConnectionUtil.getConnection()) {
             String query = "DELETE "
-                    + "FROM internetshop.shopping_cart_products "
+                    + "FROM shopping_cart_products "
                     + "WHERE cart_id=?;";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setLong(1, shoppingCart.getId());
