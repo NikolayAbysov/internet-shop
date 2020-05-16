@@ -18,7 +18,8 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     public Product create(Product element) {
-        String query = "INSERT INTO internetshop.products(name, price) VALUES (?, ?)";
+        String query = "INSERT INTO products(name, price) "
+                + "VALUES (?, ?)";
 
         try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -35,7 +36,9 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     public Optional<Product> get(Long id) {
-        String query = "select * from internetshop.products where product_id = ?";
+        String query = "SELECT * "
+                + "FROM products "
+                + "WHERE product_id = ?";
         Product product = new Product();
 
         try (Connection connection = ConnectionUtil.getConnection()) {
@@ -57,7 +60,8 @@ public class ProductDaoImpl implements ProductDao {
     @Override
     public List<Product> getAll() {
         List<Product> productList = new ArrayList<>();
-        String query = "select * from internetshop.products";
+        String query = "SELECT * "
+                + "FROM products";
 
         try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -77,7 +81,9 @@ public class ProductDaoImpl implements ProductDao {
 
     @Override
     public Product update(Product element) {
-        String query = "update internetshop.products set name = ?, price = ? where product_id = ?";
+        String query = "UPDATE products "
+                + "SET name = ?, price = ? "
+                + "WHERE product_id = ?";
 
         try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -96,7 +102,8 @@ public class ProductDaoImpl implements ProductDao {
     @Override
     public boolean delete(Long id) {
         boolean result = false;
-        String query = "delete from internetshop.products where product_id = ?";
+        String query = "DELETE FROM products "
+                + "WHERE product_id = ?";
 
         try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement preparedStatement = connection.prepareStatement(query);

@@ -7,6 +7,7 @@ import mate.academy.internetshop.db.Storage;
 import mate.academy.internetshop.model.Product;
 
 public class ProductDaoImpl implements ProductDao {
+
     @Override
     public Product create(Product product) {
         Storage.addProduct(product);

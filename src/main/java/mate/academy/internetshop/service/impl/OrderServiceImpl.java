@@ -22,7 +22,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public Order completeOrder(List<Product> products, User user) {
-        Order order = create(new Order(new ArrayList<>(products), user));
+        Order order = create(new Order(new ArrayList<>(products), user.getId()));
         order.setTotalPrice(getTotalPrice(order));
         shoppingCartService.clear(shoppingCartService.getByUserId(user.getId()));
         return order;
@@ -32,7 +32,7 @@ public class OrderServiceImpl implements OrderService {
     public List<Order> getUserOrders(User user) {
         return orderDao.getAll()
                 .stream()
-                .filter(o -> o.getUser().getId().equals(user.getId()))
+                .filter(o -> o.getUserId().equals(user.getId()))
                 .collect(Collectors.toList());
     }
 
