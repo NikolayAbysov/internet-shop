@@ -101,10 +101,10 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     private void addProducts(Order order) {
+        String query = "INSERT INTO orders_products(order_id, product_id) "
+                + "values(?,?)";
         try (Connection connection = ConnectionUtil.getConnection()) {
             for (Product product : order.getProducts()) {
-                String query = "INSERT INTO orders_products(order_id, product_id) "
-                        + "values(?,?)";
                 PreparedStatement statement = connection.prepareStatement(query);
                 statement.setLong(1, order.getId());
                 statement.setLong(2, product.getId());

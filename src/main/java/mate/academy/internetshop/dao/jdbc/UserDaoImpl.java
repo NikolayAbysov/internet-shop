@@ -149,7 +149,9 @@ public class UserDaoImpl implements UserDao {
 
     private Set<Role> getRoles(Long userId) {
         Set<Role> roles = new HashSet<>();
-        String query = "SELECT roles.role_name FROM users_roles INNER JOIN roles "
+        String query = "SELECT roles.role_name "
+                + "FROM users_roles "
+                + "INNER JOIN roles "
                 + "USING (role_id) "
                 + "WHERE users_roles.user_id = ?";
         try (Connection connection = ConnectionUtil.getConnection()) {
@@ -170,11 +172,12 @@ public class UserDaoImpl implements UserDao {
     private void setRolesId(Set<Role> roles) {
         try (Connection connection = ConnectionUtil.getConnection()) {
             for (Role role : roles) {
-                String query = "SELECT role_id FROM roles WHERE role_name = ?";
+                String query = "SELECT role_id "
+                        + "FROM roles "
+                        + "WHERE role_name = ?";
                 PreparedStatement preparedStatement = connection.prepareStatement(query);
-                preparedStatement.setString(1, role.getRoleName().toString());//check!
+                preparedStatement.setString(1, role.getRoleName().toString());
                 ResultSet resultSet = preparedStatement.executeQuery();
-
                 while (resultSet.next()) {
                     role.setId(resultSet.getLong("role_id"));
                 }

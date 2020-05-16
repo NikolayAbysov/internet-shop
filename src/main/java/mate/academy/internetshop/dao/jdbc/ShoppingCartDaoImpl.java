@@ -136,11 +136,11 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
     }
 
     private void addProducts(ShoppingCart shoppingCart) {
+        String query = "INSERT INTO "
+                + "shopping_cart_products(cart_id, product_id) "
+                + "values(?,?);";
         try (Connection connection = ConnectionUtil.getConnection()) {
             for (Product product : shoppingCart.getProducts()) {
-                String query = "INSERT INTO "
-                        + "shopping_cart_products(cart_id, product_id) "
-                        + "values(?,?);";
                 PreparedStatement statement = connection.prepareStatement(query);
                 statement.setLong(1, shoppingCart.getId());
                 statement.setLong(2, product.getId());
