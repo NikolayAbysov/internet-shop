@@ -1,16 +1,15 @@
-package mate.academy.internetshop;
+package mate.academy.internetshop.util;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.sql.Connection;
 import java.util.Objects;
-import mate.academy.internetshop.util.ConnectionUtil;
 import org.apache.ibatis.jdbc.ScriptRunner;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
-public class InitDataBase {
+public class InitDataBaseUtil {
     private static final Logger LOGGER = Logger.getLogger(ConnectionUtil.class);
 
     public static void init() {
