@@ -14,7 +14,6 @@ import mate.academy.internetshop.model.User;
 import mate.academy.internetshop.service.ProductService;
 import mate.academy.internetshop.service.ShoppingCartService;
 import mate.academy.internetshop.service.UserService;
-import mate.academy.internetshop.util.HashUtil;
 import mate.academy.internetshop.util.InitDataBaseUtil;
 
 public class InjectDataController extends HttpServlet {
@@ -31,16 +30,12 @@ public class InjectDataController extends HttpServlet {
             throws ServletException, IOException {
         InitDataBaseUtil.init();
 
-        byte[] salt1 = HashUtil.getSalt();
-        byte[] salt2 = HashUtil.getSalt();
-        byte[] salt3 = HashUtil.getSalt();
-
         User shion = new User("Shion",
-                HashUtil.hashPassword("123", salt1), salt1, Set.of(Role.of("USER")));
+                ("123"), Set.of(Role.of("USER")));
         User benio = new User("Benio",
-                HashUtil.hashPassword("123", salt2), salt2, Set.of(Role.of("USER")));
+                ("123"), Set.of(Role.of("USER")));
         User admin = new User("admin",
-                HashUtil.hashPassword("admin", salt3), salt3, Set.of(Role.of("ADMIN")));
+                ("admin"), Set.of(Role.of("ADMIN")));
         userService.create(shion);
         userService.create(benio);
         userService.create(admin);

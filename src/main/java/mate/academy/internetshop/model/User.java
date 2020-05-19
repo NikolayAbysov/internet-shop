@@ -23,10 +23,9 @@ public class User {
         this.roles = roles;
     }
 
-    public User(String login, String password, byte[] salt, Set<Role> roles) {
+    public User(String login, String password, Set<Role> roles) {
         this.login = login;
         this.password = password;
-        this.salt = salt;
         this.roles = roles;
     }
 
