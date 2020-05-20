@@ -6,7 +6,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import mate.academy.internetshop.InitDataBase;
 import mate.academy.internetshop.lib.Injector;
 import mate.academy.internetshop.model.Product;
 import mate.academy.internetshop.model.Role;
@@ -15,6 +14,7 @@ import mate.academy.internetshop.model.User;
 import mate.academy.internetshop.service.ProductService;
 import mate.academy.internetshop.service.ShoppingCartService;
 import mate.academy.internetshop.service.UserService;
+import mate.academy.internetshop.util.InitDataBaseUtil;
 
 public class InjectDataController extends HttpServlet {
     private static final Injector INJECTOR = Injector.getInstance("mate.academy.internetshop");
@@ -28,11 +28,14 @@ public class InjectDataController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        InitDataBase.init();
+        InitDataBaseUtil.init();
 
-        User shion = new User("Shion", "123", Set.of(Role.of("USER")));
-        User benio = new User("Benio", "123", Set.of(Role.of("USER")));
-        User admin = new User("admin", "admin", Set.of(Role.of("ADMIN")));
+        User shion = new User("Shion",
+                ("123"), Set.of(Role.of("USER")));
+        User benio = new User("Benio",
+                ("123"), Set.of(Role.of("USER")));
+        User admin = new User("admin",
+                ("admin"), Set.of(Role.of("ADMIN")));
         userService.create(shion);
         userService.create(benio);
         userService.create(admin);

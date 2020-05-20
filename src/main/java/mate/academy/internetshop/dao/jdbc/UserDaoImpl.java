@@ -40,14 +40,15 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public User create(User user) {
-        String query = "INSERT INTO users (name, login, password) "
-                + "VALUES(?,?,?)";
+        String query = "INSERT INTO users (name, login, password, salt) "
+                + "VALUES(?,?,?,?)";
         try (Connection connection = ConnectionUtil.getConnection()) {
             PreparedStatement preparedStatement = connection
                     .prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, user.getName());
             preparedStatement.setString(2, user.getLogin());
             preparedStatement.setString(3, user.getPassword());
+            preparedStatement.setBytes(4, user.getSalt());
             preparedStatement.executeUpdate();
             ResultSet resultSet = preparedStatement.getGeneratedKeys();
             if (resultSet.next()) {
@@ -144,7 +145,8 @@ public class UserDaoImpl implements UserDao {
         String name = resultSet.getString("name");
         String login = resultSet.getString("login");
         String password = resultSet.getString("password");
-        return new User(userId, name, login, password, getRoles(userId));
+        byte[] salt = resultSet.getBytes("salt");
+        return new User(userId, name, login, password, salt, getRoles(userId));
     }
 
     private Set<Role> getRoles(Long userId) {

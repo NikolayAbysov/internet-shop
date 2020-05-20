@@ -28,6 +28,7 @@ CREATE TABLE internetshop.users
     name character varying(256),
     login character varying(256) NOT NULL,
     password character varying(256) NOT NULL,
+    salt bytea NOT NULL,
     PRIMARY KEY (user_id)
 );
 
