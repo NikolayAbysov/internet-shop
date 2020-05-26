@@ -22,7 +22,7 @@ public class AddProductController extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-            throws ServletException, IOException {
+            throws IOException {
         String productName = req.getParameter("productName");
         String productPrice = req.getParameter("productPrice");
 
