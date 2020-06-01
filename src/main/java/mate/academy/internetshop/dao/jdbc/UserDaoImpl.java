@@ -173,11 +173,12 @@ public class UserDaoImpl implements UserDao {
 
     private void setRolesId(Set<Role> roles) {
         try (Connection connection = ConnectionUtil.getConnection()) {
+            PreparedStatement preparedStatement;
             for (Role role : roles) {
                 String query = "SELECT role_id "
                         + "FROM roles "
                         + "WHERE role_name = ?";
-                PreparedStatement preparedStatement = connection.prepareStatement(query);
+                preparedStatement = connection.prepareStatement(query);
                 preparedStatement.setString(1, role.getRoleName().toString());
                 ResultSet resultSet = preparedStatement.executeQuery();
                 while (resultSet.next()) {
@@ -193,10 +194,11 @@ public class UserDaoImpl implements UserDao {
 
     private void addRoles(User user) {
         try (Connection connection = ConnectionUtil.getConnection()) {
+            PreparedStatement preparedStatement;
             for (Role role: user.getRoles()) {
                 String query = "INSERT INTO users_roles (user_id, role_id) "
                         + "VALUES (?,?)";
-                PreparedStatement preparedStatement = connection.prepareStatement(query);
+                preparedStatement = connection.prepareStatement(query);
                 preparedStatement.setLong(1, user.getId());
                 preparedStatement.setLong(2, role.getId());
                 preparedStatement.executeUpdate();
