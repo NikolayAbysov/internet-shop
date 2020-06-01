@@ -104,8 +104,9 @@ public class OrderDaoImpl implements OrderDao {
         String query = "INSERT INTO orders_products(order_id, product_id) "
                 + "values(?,?)";
         try (Connection connection = ConnectionUtil.getConnection()) {
+            PreparedStatement statement;
             for (Product product : order.getProducts()) {
-                PreparedStatement statement = connection.prepareStatement(query);
+                statement = connection.prepareStatement(query);
                 statement.setLong(1, order.getId());
                 statement.setLong(2, product.getId());
                 statement.executeUpdate();

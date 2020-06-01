@@ -140,8 +140,9 @@ public class ShoppingCartDaoImpl implements ShoppingCartDao {
                 + "shopping_cart_products(cart_id, product_id) "
                 + "values(?,?);";
         try (Connection connection = ConnectionUtil.getConnection()) {
+            PreparedStatement statement;
             for (Product product : shoppingCart.getProducts()) {
-                PreparedStatement statement = connection.prepareStatement(query);
+                statement = connection.prepareStatement(query);
                 statement.setLong(1, shoppingCart.getId());
                 statement.setLong(2, product.getId());
                 statement.executeUpdate();
