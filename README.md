@@ -11,6 +11,7 @@ It has login and registration forms.
 
 There are controllers for working with products, users, orders and shopping carts:
 <hr>
+
 Inject - for injection mock data,
 
 Registration - for registering new users,
