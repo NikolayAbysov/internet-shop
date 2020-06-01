@@ -63,7 +63,8 @@ Change a path in interntetshop.src.main.java.resources.log4j.properties
 
 Run the project.
 
-For test purposes you can inject test data, using "Inject test data" link on Navbar
+For test purposes you can inject test data, using "Inject test data" link on Navbar.
+
 By default there are 3 users:
 
 * Role ADMIN - login "admin", passkey "admin"
